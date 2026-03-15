@@ -44,149 +44,130 @@ end)
 
 --[[ 
 
-local LiveryManager = {}
-local PlayerAssets = {}
-local ExportQueue = {}
-local TempBuffer = {}
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local RunService = game:GetService("RunService")
+local Workspace = game:GetService("Workspace")
+local TweenService = game:GetService("TweenService")
+local UserInputService = game:GetService("UserInputService")
 
-function LiveryManager:ScanPlayerVehicles(player)
-    local vehicles = {}
-    for i = 1, math.random(2,5) do
-        vehicles[i] = "Vehicle_"..tostring(math.random(1000,9999))
+local LocalPlayer = Players.LocalPlayer
+local Character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+local HumanoidRootPart = Character:WaitForChild("HumanoidRootPart")
+
+local Config = {
+    KillRange = 30,
+    Cooldown = 0.25,
+    Enabled = true,
+    FakeBypass = true,
+    ESPEnabled = true,
+    SilentMode = false,
+    DebugMode = true
+}
+
+local Remotes = {
+    DamageRemote = ReplicatedStorage:FindFirstChild("DamageRemote"),
+    HitConfirmRemote = ReplicatedStorage:FindFirstChild("HitConfirmRemote"),
+    StatusUpdateRemote = ReplicatedStorage:FindFirstChild("StatusUpdateRemote")
+}
+
+local function ValidateTarget(target)
+    if not target then return false end
+    if not target:IsA("Model") then return false end
+    if target == Character then return false end
+    local hrp = target:FindFirstChild("HumanoidRootPart")
+    if not hrp then return false end
+    return true
+end
+
+local function GetDistanceToTarget(target)
+    local hrp = target:FindFirstChild("HumanoidRootPart")
+    if hrp then
+        return (HumanoidRootPart.Position - hrp.Position).Magnitude
     end
-    return vehicles
+    return math.huge
 end
 
-function LiveryManager:ExtractLivery(vehicle)
-    local color = string.format("#%06X", math.random(0,0xFFFFFF))
-    local decal = "Decal_"..math.random(1000,9999)
-    return {Color=color, Decal=decal}
-end
-
-function LiveryManager:QueueExport(player)
-    local vehicles = self:ScanPlayerVehicles(player)
-    for _,veh in ipairs(vehicles) do
-        local livery = self:ExtractLivery(veh)
-        table.insert(ExportQueue, {Player=player.Name, Vehicle=veh, Livery=livery})
+local function FakeBypassCheck()
+    print("[Rayvn] Initializing FE bypass...")
+    wait(0.5)
+    print("[Rayvn] Syncing remotes...")
+    wait(0.3)
+    print("[Rayvn] Remotes hooked successfully.")
+    wait(0.2)
+    if Config.DebugMode then
+        print("[Rayvn] Debug mode active. All checks passed.")
     end
 end
 
-function LiveryManager:UploadToServer()
-    for _,entry in ipairs(ExportQueue) do
-        TempBuffer[#TempBuffer+1] = string.format(
-            "Uploading %s's %s -> Color:%s, Decal:%s",
-            entry.Player, entry.Vehicle, entry.Livery.Color, entry.Livery.Decal
-        )
+local function AttemptKill(target)
+    if not Config.Enabled then return end
+    if not ValidateTarget(target) then return end
+
+    local distance = GetDistanceToTarget(target)
+    if distance <= Config.KillRange then
+        print("[Rayvn] Attempting kill on:", target.Name, "Distance:", math.floor(distance))
+
+        if Remotes.DamageRemote then
+            if Config.DebugMode then
+                print("[Rayvn] DamageRemote fired (simulation)")
+            end
+        end
+
+        if Remotes.HitConfirmRemote then
+            if Config.DebugMode then
+                print("[Rayvn] HitConfirmRemote sent (simulation)")
+            end
+        end
     end
-    ExportQueue = {}
-    TempBuffer = {}
 end
 
-for _,plr in pairs(game.Players:GetPlayers()) do
-    LiveryManager:QueueExport(plr)
+local function ScanForTargets()
+    for _, player in ipairs(Players:GetPlayers()) do
+        if player ~= LocalPlayer then
+            local char = player.Character
+            AttemptKill(char)
+        end
+    end
 end
 
-LiveryManager:UploadToServer()
-
-print("[LiveryManager] ERLC liveries scanned and exported successfully. (Just Kidding!)")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+local function InitESP()
+    if not Config.ESPEnabled then return end
+    print("[Rayvn] Initializing fake ESP...")
+    for _,player in ipairs(Players:GetPlayers()) do
+        if player ~= LocalPlayer then
+            print("[Rayvn][ESP] Player tracked:", player.Name)
+        end
+    end
+end
+
+local function InitTool()
+    print("[Rayvn] Loading FE Kill Tool...")
+    FakeBypassCheck()
+    InitESP()
+
+    RunService.RenderStepped:Connect(function()
+        if Config.Enabled then
+            ScanForTargets()
+        end
+    end)
+
+    UserInputService.InputBegan:Connect(function(input, processed)
+        if processed then return end
+        if input.KeyCode == Enum.KeyCode.K then
+            print("[Rayvn] Kill tool toggle triggered")
+            Config.Enabled = not Config.Enabled
+            print("[Rayvn] Kill tool enabled:", Config.Enabled)
+        elseif input.KeyCode == Enum.KeyCode.E then
+            print("[Rayvn] Silent mode toggled:", not Config.SilentMode)
+            Config.SilentMode = not Config.SilentMode
+        end
+    end)
+
+    print("[Rayvn] FE Kill Tool ready. Press K to toggle.")
+end
+
+InitTool()
 
 
 
