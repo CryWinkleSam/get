@@ -15,7 +15,7 @@ local function SendChatMessage(message)
 end
 
 
-SendChatMessage("Thanks for loading Rayvn-scripts by crywink and hazzel! - FE kill brick tool")
+SendChatMessage("Rayvn Scripts")
 
 
 
