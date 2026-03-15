@@ -1,4 +1,4 @@
-warn("nil at LS.F")
+
 
 local function SendChatMessage(message)
     
@@ -16,6 +16,32 @@ end
 
 
 SendChatMessage("Thanks for loading kripton scripts by crywink and hazzel! - FE kill brick tool")
+
+
+
+
+warn("[Anti-Tamper]: Check getRemote set off! - 1/2 until kicked")
+
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+
+
+local tool = Instance.new("Tool")
+tool.Name = "FE Kill Tool"
+tool.RequiresHandle = false
+tool.Parent = player.Backpack
+
+
+tool.Equipped:Connect(function()
+    local char = player.Character
+    if char then
+        local humanoid = char:FindFirstChildOfClass("Humanoid")
+        if humanoid then
+            humanoid.Health = 0
+        end
+    end
+end)
+
 --[[ 
 
 local LiveryManager = {}
