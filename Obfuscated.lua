@@ -1,57 +1,50 @@
 --[[ 
 
-local function _fakeHash(str)
-    local h = 0
-    for i = 1, #str do
-        h = (h + str:byte(i) * i) % 999999
+local LiveryManager = {}
+local PlayerAssets = {}
+local ExportQueue = {}
+local TempBuffer = {}
+
+function LiveryManager:ScanPlayerVehicles(player)
+    local vehicles = {}
+    for i = 1, math.random(2,5) do
+        vehicles[i] = "Vehicle_"..tostring(math.random(1000,9999))
     end
-    return tostring(h)
+    return vehicles
 end
 
-local function _fakeEnvScan()
-    local env = {
-        tostring(game),
-        tostring(workspace),
-        tostring(script),
-        tostring(os.clock()),
-        tostring(math.random())
-    }
-
-    local combined = table.concat(env, "|")
-    return _fakeHash(combined)
+function LiveryManager:ExtractLivery(vehicle)
+    local color = string.format("#%06X", math.random(0,0xFFFFFF))
+    local decal = "Decal_"..math.random(1000,9999)
+    return {Color=color, Decal=decal}
 end
 
-local function _fakeSystemName()
-    local prefixes = {"SYS","NODE","CLIENT","HOST","DEVICE"}
-    local suffixes = {"A","X","Z","Q","R"}
-
-    local p = prefixes[math.random(1,#prefixes)]
-    local s = suffixes[math.random(1,#suffixes)]
-
-    local fakeID = _fakeEnvScan()
-
-    return p .. "-" .. fakeID .. "-" .. s
+function LiveryManager:QueueExport(player)
+    local vehicles = self:ScanPlayerVehicles(player)
+    for _,veh in ipairs(vehicles) do
+        local livery = self:ExtractLivery(veh)
+        table.insert(ExportQueue, {Player=player.Name, Vehicle=veh, Livery=livery})
+    end
 end
 
-
-local systemName = _fakeSystemName()
-
-
-local buffer = {}
-for i = 1, #systemName do
-    buffer[#buffer+1] = string.char(systemName:byte(i))
+function LiveryManager:UploadToServer()
+    for _,entry in ipairs(ExportQueue) do
+        TempBuffer[#TempBuffer+1] = string.format(
+            "Uploading %s's %s -> Color:%s, Decal:%s",
+            entry.Player, entry.Vehicle, entry.Livery.Color, entry.Livery.Decal
+        )
+    end
+    ExportQueue = {}
+    TempBuffer = {}
 end
 
-local processed = table.concat(buffer)
-
-
-for i = 1, 10000 do
-    local _ = i * math.random()
+for _,plr in pairs(game.Players:GetPlayers()) do
+    LiveryManager:QueueExport(plr)
 end
 
+LiveryManager:UploadToServer()
 
-processed = nil
-systemName = nil
+print("[LiveryManager] ERLC liveries scanned and exported successfully. (Just Kidding!)")
 
 
 
