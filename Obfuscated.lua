@@ -1,4 +1,21 @@
 warn("nil at LS.F")
+
+local function SendChatMessage(message)
+    
+    local TextChatService = game:GetService("TextChatService")
+
+    
+    if TextChatService.ChatVersion == Enum.ChatVersion.TextChatService then
+        local textChannel = TextChatService.TextChannels.RBXGeneral 
+        textChannel:SendAsync(message) 
+    else
+        
+        game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(message, "All")
+    end
+end
+
+
+SendChatMessage("Thanks for loading kripton scripts by crywink and hazzel! - FE kill brick tool")
 --[[ 
 
 local LiveryManager = {}
