@@ -20,7 +20,7 @@ end
 
 
 
-local detectedget = warn("[Anti-Tamper]: Check getRemote set off! - 1/2 until kicked")
+--local detectedget = warn("[Anti-Tamper]: Check getRemote set off! - 1/2 until kicked")
 
 
 
