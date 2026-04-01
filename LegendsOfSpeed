@@ -1,0 +1,38 @@
+-- REJOIN TO USE GEMS AND ANY UI NIGGE
+
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Workspace = game:GetService("Workspace")
+
+local orbEvent = ReplicatedStorage:WaitForChild("rEvents"):WaitForChild("orbEvent")
+local orbFolder = Workspace:WaitForChild("orbFolder")
+
+local function getMap()
+    for _, v in pairs(orbFolder:GetChildren()) do
+        if v:IsA("Folder") then
+            return v
+        end
+    end
+end
+
+local function getOrbTypes(map)
+    local types = {}
+
+    for _, v in pairs(map:GetChildren()) do
+         
+        table.insert(types, v.Name)
+    end
+
+    return types
+end
+
+local map = getMap()
+
+if map then
+    local orbTypes = getOrbTypes(map)
+
+    for _, orbName in pairs(orbTypes) do
+        for i = 1, 1000 do
+            orbEvent:FireServer("collectOrb", orbName, map.Name)
+        end
+    end
+end
