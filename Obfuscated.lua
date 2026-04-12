@@ -1,4 +1,4 @@
-
+setclipboard("Hello nigger you have been hacked on foenem")
 
 local function SendChatMessage(message)
     
