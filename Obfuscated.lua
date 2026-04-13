@@ -1,6 +1,6 @@
 setclipboard("Hello nigger you have been hacked on foenem")
 wait(1)
-rconsoleprint("Installed \n Path switched to SYS32  ")
+--rconsoleprint("Installed \n Path switched to SYS32  ")
 local function SendChatMessage(message)
     
     local TextChatService = game:GetService("TextChatService")
