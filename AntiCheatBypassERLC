@@ -1,6 +1,6 @@
 --[[ This is the raw code
                Thats how "advanced" it is
-                      Made by default0731 on discord]]
+                      Made by samkalish on discord]]
 
 
 
@@ -9,7 +9,7 @@
 local env = getgenv()
 
 if env.negro_samkalish then
-    return warn("ERROR") 
+    return warn("xd stop") 
 end
 
 env.negro_samkalish = true
