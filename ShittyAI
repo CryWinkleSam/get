@@ -1,3 +1,5 @@
+repeat task.wait() until game:IsLoaded()
+
 _G.AutoRejoin = true
 
 local TeleportService = game:GetService("TeleportService")
