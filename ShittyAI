@@ -1,5 +1,7 @@
 repeat task.wait() until game:IsLoaded()
 
+local tams = _G.Delay
+
 _G.AutoRejoin = true
 
 local TeleportService = game:GetService("TeleportService")
@@ -26,8 +28,8 @@ end
 
 spawn(function()
     while _G.AutoRejoin do
-        Notify("Rejoiner", "Waiting 45 seconds...", 8)
-        task.wait(45)
+        Notify("Rejoiner", "Waiting " .. tams .. " seconds...", 8)
+        task.wait(tams)
         
         if not _G.AutoRejoin then break end
         
