@@ -35,14 +35,14 @@ spawn(function()
         
         if not _G.AutoRejoin then break end
         
-        Notify("Rejoiner", "Rejoining new server in 5s...", 5)
+        Notify("Rejoiner", "Rejoining new server in 10s...", 5)
         task.wait(5)
         
         -- Kick + Auto Rejoin
-        Players.LocalPlayer:Kick("Rejoining new server...\n\nsDo not click leave")
+        Players.LocalPlayer:Kick("Rejoining new server...\n\nDo not click leave")
         
         -- Fallback
-        task.wait(6)
+        task.wait(3)
         TeleportService:Teleport(PlaceId)
     end
 end)
