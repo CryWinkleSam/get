@@ -15,11 +15,11 @@ end
 
 Notify("Rejoiner", "Auto Rejoin Loaded", 6)
 
--- Auto re-execute on server hop
+
 if syn and syn.queue_on_teleport then
-    syn.queue_on_teleport(game:HttpGet("YOUR_LOADSTRING_HERE"))
+    syn.queue_on_teleport(game:HttpGet("https://raw.githubusercontent.com/CryWinkleSam/get/refs/heads/main/ShittyAI"))
 elseif queue_on_teleport then
-    queue_on_teleport(game:HttpGet("YOUR_LOADSTRING_HERE"))
+    queue_on_teleport(game:HttpGet("https://raw.githubusercontent.com/CryWinkleSam/get/refs/heads/main/ShittyAI"))
 end
 
 spawn(function()
