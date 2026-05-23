@@ -1,0 +1,42 @@
+_G.AutoRejoin = true
+
+local TeleportService = game:GetService("TeleportService")
+local StarterGui = game:GetService("StarterGui")
+local Players = game:GetService("Players")
+local PlaceId = game.PlaceId
+
+local function Notify(title, text, duration)
+    StarterGui:SetCore("SendNotification", {
+        Title = title or "Rejoiner";
+        Text = text or "Message";
+        Duration = duration or 5;
+    })
+end
+
+Notify("Rejoiner", "Auto Rejoin Loaded", 6)
+
+-- Auto re-execute on server hop
+if syn and syn.queue_on_teleport then
+    syn.queue_on_teleport(game:HttpGet("YOUR_LOADSTRING_HERE"))
+elseif queue_on_teleport then
+    queue_on_teleport(game:HttpGet("YOUR_LOADSTRING_HERE"))
+end
+
+spawn(function()
+    while _G.AutoRejoin do
+        Notify("Rejoiner", "Waiting 45 seconds...", 8)
+        task.wait(45)
+        
+        if not _G.AutoRejoin then break end
+        
+        Notify("Rejoiner", "Rejoining new server in 5s...", 5)
+        task.wait(5)
+        
+        -- Kick + Auto Rejoin
+        Players.LocalPlayer:Kick("Rejoining new server...\nsamkalish")
+        
+        -- Fallback
+        task.wait(6)
+        TeleportService:Teleport(PlaceId)
+    end
+end)
