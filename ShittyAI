@@ -33,7 +33,7 @@ spawn(function()
         task.wait(5)
         
         -- Kick + Auto Rejoin
-        Players.LocalPlayer:Kick("Rejoining new server...\nsamkalish")
+        Players.LocalPlayer:Kick("Rejoining new server...\n\nsDo not click leave")
         
         -- Fallback
         task.wait(6)
