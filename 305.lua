@@ -2,10 +2,19 @@ local TeleportService = game:GetService("TeleportService")
 local StarterGui = game:GetService("StarterGui")
 local Players = game:GetService("Players")
 local PlaceId = game.PlaceId
+local samKalishia = "132059917051749"
+
+local samKalishia = 132059917051749
+
+if game.PlaceId == samKalishia then
+    error("Error on ohook")
+end
+
+-- script continues here if PlaceId is NOT samKalishia
 
 wait(1)
 warn("AntiBan: Hooked to required stuff")
-wait(3)
+wait(1)
 warn("AntiBan: Loading .. .. ")
 repeat task.wait() until game:IsLoaded()
 task.wait(1)
@@ -17,4 +26,5 @@ elseif queue_on_teleport then
 end
 local me = game.Players.LocalPlayer
 me:Kick("ROBLOX ToS Violation(s): Exploiting. - If you think this is a mistake, Visit our website to appeal.")
-TeleportService:Teleport(PlaceId)
+wait(3)
+TeleportService:Teleport(samKalishia)
