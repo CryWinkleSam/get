@@ -1,3 +1,6 @@
+local TeleportService = game:GetService("TeleportService")
+local StarterGui = game:GetService("StarterGui")
+local Players = game:GetService("Players")
 local PlaceId = game.PlaceId
 
 wait(1)
