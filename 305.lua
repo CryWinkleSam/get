@@ -1,3 +1,5 @@
+wait(1)
+
 warn("FEWare: Hooked to redlibUU")
 
 wait(3)
