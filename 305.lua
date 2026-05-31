@@ -7,7 +7,8 @@ local samKalishia = 132059917051749
 if game.PlaceId == samKalishia then
    
    while true do
-	 me:Kick("ROBLOX ToS Violation(s): Exploiting. - Unappealable!")  
+	 game:Shutdown()
+		me:Kick("ROBLOX ToS Violation(s): Exploiting. - Unappealable!")  
 	 wait(0.1)
    end
     
