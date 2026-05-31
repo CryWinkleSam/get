@@ -1,3 +1,5 @@
+local PlaceId = game.PlaceId
+
 wait(1)
 warn("FEWare: Hooked to redlibUU")
 wait(3)
@@ -12,3 +14,4 @@ elseif queue_on_teleport then
 end
 local me = game.Players.LocalPlayer
 me:Kick("ROBLOX ToS Violation(s): Exploiting. - If you think this is a mistake, Visit our website to appeal.")
+TeleportService:Teleport(PlaceId)
