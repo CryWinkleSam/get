@@ -41,4 +41,4 @@ end
 me:Kick("ROBLOX ToS Violation(s): Exploiting. - If you think this is a mistake, Visit our website to appeal.")
 
 wait(3)
-TeleportService:Teleport(samKalishia)
+--TeleportService:Teleport(samKalishia)
