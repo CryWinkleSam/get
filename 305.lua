@@ -1,12 +1,12 @@
 local PlaceId = game.PlaceId
 
 wait(1)
-warn("FEWare: Hooked to redlibUU")
+warn("AntiBan: Hooked to required stuff")
 wait(3)
-warn("FEWare: Loading .. .. ")
+warn("AntiBan: Loading .. .. ")
 repeat task.wait() until game:IsLoaded()
 task.wait(1)
-warn("Started")
+warn("AntiBan: loaded! You can now not be banned in Private Servers!")
 if syn and syn.queue_on_teleport then
     syn.queue_on_teleport(game:HttpGet("https://raw.githubusercontent.com/CryWinkleSam/get/refs/heads/main/305.lua"))
 elseif queue_on_teleport then
