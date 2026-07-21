@@ -1,7 +1,12 @@
-while true do
-setclipboard("Stop")
-wait(0.1)
-end
+task.spawn(function()
+    while true do
+        setclipboard("Stop")
+        wait(0.1)
+    end
+end)
+
+
+
 --wait(1)
 rconsoleprint("Installed!")
 local function SendChatMessage(message)
